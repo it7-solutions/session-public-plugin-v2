@@ -1,0 +1,7 @@
+<h3>My Agenda</h3>
+<div *ngFor="let session of myAgenda.sessions">
+    <div (click)="onExpandClick(session)"><b>{{ session.name }}</b> Already in agenda</div>
+    <div *ngIf="session._expanded">
+        <div><b>canton</b> {{ session.cantonKey }}</div>
+    </div>
+</div>

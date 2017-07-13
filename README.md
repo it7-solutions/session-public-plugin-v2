@@ -1,1 +1,2 @@
-# session-public-plugin-v2
+Payment BackOffice Plugin
+(c) it7-solutions

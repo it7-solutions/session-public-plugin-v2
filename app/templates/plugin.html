@@ -1,0 +1,21 @@
+<h2>Plugin</h2>
+
+<my-agenda-list [myAgenda]="myAgenda"></my-agenda-list>
+
+<select data-key="cantons" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.cantons.value">
+    <option *ngFor="let option of filters.filtersByKey.cantons.values" [value]="option.key">{{option.label}}</option>
+</select>
+
+<select data-key="languages" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.languages.value">
+    <option *ngFor="let option of filters.filtersByKey.languages.values" [value]="option.key">{{option.label}}</option>
+</select>
+
+<div (click)="onChooseCantonClick()" >Choose canton on Map</div>
+
+<session-list [sortings]="sortings" [sessionList]="sessionList"></session-list>
+
+<div *ngIf="!validationState.minSessionsInMyAgenda">You must choose more sessions</div>
+
+<busy-popup></busy-popup>
+<choose-canton *ngIf="showChooseCanton" [filters]="filters" (cancelPopup)="onCancelChooseCanton()"
+               (setCanton)="onChooseCanton($event)"></choose-canton>

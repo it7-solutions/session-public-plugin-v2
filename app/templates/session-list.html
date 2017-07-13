@@ -1,0 +1,12 @@
+<h3>{{ 'Sessions' | translation }}</h3>
+<span (click)="onSortClick(sortings.sortingsByKey['name'])">Name <span *ngIf="sortings.sortingsByKey['name'].active">{{ sortings.sortingsByKey['name'].descending ? 'V' : '^' }}</span></span> |
+<span (click)="onSortClick(sortings.sortingsByKey['canton'])">Canton <span *ngIf="sortings.sortingsByKey['canton'].active">{{ sortings.sortingsByKey['canton'].descending ? 'V' : '^' }}</span></span>
+<div *ngFor="let item of sessionList.items">
+    <div *ngIf="item.visible" (click)="onExpandClick(item)">
+        {{ item.original.name }} | {{ item.original.cantonKey }}
+        <span *ngIf="item.original.isInAgenda ">Already in agenda</span>
+        <span *ngIf="item.original.isCanAdd" (click)="onAddClick(item)">[+]</span>
+        <span *ngIf="item.original.isCanRemove" (click)="onRemoveClick(item)">[-]</span>
+    </div>
+    <div *ngIf="item.visible && item.expanded">Expanded</div>
+</div>

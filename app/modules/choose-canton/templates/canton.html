@@ -1,0 +1,7 @@
+<style>
+    .canton {fill-opacity:0.75}
+    .canton.activeForSelection {fill-opacity:0.75}
+    .canton.selected {fill:yellow; fill-opacity:1}
+    .canton:hover {fill-opacity:1}
+</style>
+<svg:path data-type="canton" [attr.fill]="canton.fill" [attr.class]="canton.cssClass" [attr.data-id]="canton.name" stroke="#ffffff" stroke-miterlimit="0" [attr.d]="canton.path"></svg:path>
