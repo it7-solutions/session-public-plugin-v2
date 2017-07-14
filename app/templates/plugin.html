@@ -1,21 +1,18 @@
-<h2>Plugin</h2>
-
-<my-agenda-list [myAgenda]="myAgenda"></my-agenda-list>
-
-<select data-key="cantons" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.cantons.value">
-    <option *ngFor="let option of filters.filtersByKey.cantons.values" [value]="option.key">{{option.label}}</option>
+<select data-key="types" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.types.value">
+    <option *ngFor="let option of filters.filtersByKey.types.values" [value]="option.key">{{option.label}}</option>
 </select>
 
-<select data-key="languages" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.languages.value">
-    <option *ngFor="let option of filters.filtersByKey.languages.values" [value]="option.key">{{option.label}}</option>
+<select data-key="dates" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.dates.value">
+    <option *ngFor="let option of filters.filtersByKey.dates.values" [value]="option.key">{{option.label}}</option>
 </select>
-
-<div (click)="onChooseCantonClick()" >Choose canton on Map</div>
 
 <session-list [sortings]="sortings" [sessionList]="sessionList"></session-list>
+<my-agenda-connected-list [sessionList]="sessionList"></my-agenda-connected-list>
 
-<div *ngIf="!validationState.minSessionsInMyAgenda">You must choose more sessions</div>
+<div *ngIf="validationState.notEnoughSessionsInMyAgenda">You must choose more sessions</div>
+
+<br>
+<a *ngIf="config.downloadAllCalendarsUrl" href="{{ config.downloadAllCalendarsUrl }}">Download all calendars</a>
+<a *ngIf="config.downloadMyProgrammeUrl" href="{{ config.downloadMyProgrammeUrl }}">Download my programme</a>
 
 <busy-popup></busy-popup>
-<choose-canton *ngIf="showChooseCanton" [filters]="filters" (cancelPopup)="onCancelChooseCanton()"
-               (setCanton)="onChooseCanton($event)"></choose-canton>

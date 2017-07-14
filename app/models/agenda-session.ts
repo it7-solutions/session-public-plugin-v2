@@ -13,15 +13,13 @@ export class AgendaSession {
     restaurantDetails: string = '';
     chefPhotoUrl: string = '';
     chefBiography: string = '';
+    downloadCalendarUrl: string = '';
 
     // for filters
-    languageKey: string = '';
-    cantonKey: string = '';
-    sessionKey: string = '';
-    chefKey: string = '';
+    type_id: string = '';
 
     // for sort
-    dateRaw: string = '';
+    typeFormatted: string = '';
 
     // for controls
     isInAgenda: boolean = false;
@@ -34,7 +32,7 @@ export class AgendaSession {
         this.resetFlags();
     }
 
-    public resetFlags(){
+    public resetFlags() {
         // Temporally check for max 1 session in agenda
         // this.isCanAdd = !this.isLocked && !this.isInAgenda;
         // this.isCanRemove = !this.isLocked && this.isInAgenda;

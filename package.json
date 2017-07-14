@@ -19,7 +19,9 @@
     "webdriver:update": "webdriver-manager update",
     "build": "webpack",
     "minify": "(webpack) && (uglifyjs ./dist/app.bundle.js -c warnings=false -m -o ./dist/app.bundle.min.js --source-map ./dist/app.bundle.min.js.map) && (uglifyjs ./dist/vendor.bundle.js -c warnings=false -m -o ./dist/vendor.bundle.min.js --source-map ./dist/vendor.bundle.min.js.map)",
-    "webpackstart": "webpack-dev-server"
+    "webpackstart": "webpack-dev-server",
+    "expressstart": "node ./express/app.js",
+    "nodemon_start": "nodemon ./express/app.js"
   },
   "keywords": ["it7-solutions", "angular2"],
   "author": "anekhero",
@@ -47,7 +49,7 @@
   "devDependencies": {
     "concurrently": "^3.0.0",
     "lite-server": "^2.2.2",
-    "typescript": "^2.0.3",
+    "typescript": "~2.0.8",
     "typings": "^1.4.0",
 
     "canonical-path": "0.0.2",
@@ -66,7 +68,9 @@
     "rimraf": "^2.5.4",
     "uglify-js": "^2.7.0",
     "webpack": "1.13.0",
-    "webpack-dev-server": "1.14.1"
+    "webpack-dev-server": "1.14.1",
+    "express": "4.14.0",
+    "nodemon": "latest"
   },
   "repository": {}
 }

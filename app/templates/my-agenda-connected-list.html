@@ -1,0 +1,11 @@
+<h3>{{ 'My agenda' | translation }}</h3>
+<div *ngFor="let item of sessionList.items">
+    <div *ngIf="item.visible && item.original.isInAgenda">
+        <span (click)="onExpandClick(item)">
+            {{ item.original.name }} | {{ item.original.date }}
+        </span>
+        <span *ngIf="item.original.isCanRemove" (click)="onRemoveClick(item)">[-]</span>
+        <a href="{{ item.original.downloadCalendarUrl }}">download calendar</a>
+    </div>
+    <div *ngIf="item.visible && item.original.isInAgenda && item.expanded">Expanded - {{ item.original.name }}</div>
+</div>

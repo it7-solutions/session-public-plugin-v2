@@ -1,33 +1,33 @@
 import {Component, Output} from '@angular/core';
-import {PluginConfig} from "../services/plugin.config";
-import {ListOf} from "../models/list-of";
-import {FilterListOf, Filter} from "../models/filter-list-of";
+import {PluginConfig} from '../services/plugin.config';
+import {ListOf} from '../models/list-of';
+import {FilterListOf} from '../models/filter-list-of';
 import {SortListOf} from '../models/sort-list-of';
-import {AgendaSessionsService} from "../services/agenda-sessions.service";
-import {MyAgendaService} from "../services/my-agenda.service";
-import {AgendaSession} from "../models/agenda-session";
-import {It7ErrorService} from "../services/it7-error.service";
+import {AgendaSessionsService} from '../services/agenda-sessions.service';
+import {MyAgendaService} from '../services/my-agenda.service';
+import {AgendaSession} from '../models/agenda-session';
+import {It7ErrorService} from '../services/it7-error.service';
 import {ValidationService} from '../services/validation.service';
+import {DataManagerService} from '../services/data-manager.service';
 
 @Component({
     selector: 'session-public-plugin',
     templateUrl: PluginConfig.buildTemplateUrl('templates/plugin.html')
 })
 export class PluginComponent {
-    @Output() public sessionList:ListOf;
+    @Output() public sessionList: ListOf;
     @Output() public myAgenda: MyAgendaService;
-    @Output() public filters:FilterListOf;
-    @Output() public sortings:SortListOf;
-    @Output() public validationState:any;
-
-    private showChooseCanton = false;
+    @Output() public filters: FilterListOf;
+    @Output() public sortings: SortListOf;
+    @Output() public validationState: any;
 
     constructor(
-        config: PluginConfig,
+        public config: PluginConfig,
         private err: It7ErrorService,
         private agendaSessions: AgendaSessionsService,
         myAgenda: MyAgendaService,
-        validation: ValidationService
+        validation: ValidationService,
+        private dm: DataManagerService
     ) {
         validation.setMyAgenda(myAgenda);
         this.validationState = validation.state;
@@ -42,71 +42,53 @@ export class PluginComponent {
 
         // Create sorting
         this.sortings = new SortListOf(this.sessionList);
-        this.sortings.add(config.sortings)
+        this.sortings.add(config.sortings);
     }
 
     // -- Angular events
 
-    public ngOnInit(){
+    public ngOnInit() {
         this.agendaSessions.onUpdate.subscribe(sessions => this.onSessionsUpdate(sessions));
         this.onSessionsUpdate(this.agendaSessions.sessions);
-        this.applyFilter();
-        this.sortList();
+        // this.applyFilter();
+        // this.sortList();
+
+        this.dm.getSessionRequest();
     }
 
     // -- Component events
 
-    public onFilterChange(event:any) {
-        var select = event.target;
-        var filterKey = select.getAttribute('data-key');
-        var filter = this.filters.filtersByKey[filterKey];
-        if(filter) {
+    public onFilterChange(event: any) {
+        let select = event.target;
+        let filterKey = select.getAttribute('data-key');
+        let filter = this.filters.filtersByKey[filterKey];
+        if (filter) {
             filter.value = select.value;
             this.applyFilter();
         } else {
-            console && console.error && console.error('Not found instance of class "Filter" for changed filter.');
+            this.showError('Not found instance of class "Filter" for changed filter.');
         }
-    }
-
-    public onChooseCantonClick(){
-        this.showChooseCanton = true;
-    }
-
-    public onCancelChooseCanton() {
-        this.showChooseCanton = false;
-    }
-
-    public onChooseCanton(cantonKey:string) {
-        this.showChooseCanton = false;
-        this.setCantonFilterByKey(cantonKey);
-        this.applyFilter();
     }
 
     // -- Private
 
-    private onSessionsUpdate(sessions: AgendaSession[]){
+    private onSessionsUpdate(sessions: AgendaSession[]) {
         this.sessionList.update(sessions);
         this.applyFilter();
+        this.sortList();
     }
 
-    private applyFilter(){
+    private applyFilter() {
         this.filters.applyToList(this.sessionList);
     }
 
-    private sortList(){
+    private sortList() {
         this.sortings.sort();
     }
 
-    private setCantonFilterByKey(key: string) {
-        var filter: Filter = this.filters.filtersByKey['cantons'];
-        if (filter instanceof Filter) {
-            if (filter.values.find(f => f.key === key)) {
-                filter.value = key;
-            } else {
-                this.err.fire('Selected Canton does not exist in the filter of the cantons');
-            }
-        } else {
-            this.err.fire('Filter cantons not found');
+    private showError(msg: string) {
+        if (console && console.error) {
+            console.error(msg);
         }
     }
 }

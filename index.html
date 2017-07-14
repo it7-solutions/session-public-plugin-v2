@@ -15,92 +15,34 @@
 
     <script src="systemjs.config.js"></script>
     <script>
-        function mockAjax(url, data){
-            console.log('mockAjax', url, data);
-            data = JSON.parse(data.data);
-            console.log('mockAjax deJSON', data);
-            var r = {
-                status: 'ok',
-                message: '',
-                data: []
-            };
-            switch (url) {
-                case '/add':
-                    r.data = [
-                        {
-                            id: '1',
-                            name: 'First session Jura FR',
-                            languageKey: 'fr',
-                            cantonKey: 'ju',
-                            isInAgenda: data.id == '1',
-                            isCanAdd: false,
-                            isCanRemove: data.id == '1'
-                        },
-                        {
-                            id: '2',
-                            name: 'Second session Zug EN',
-                            languageKey: 'en',
-                            cantonKey: 'zu',
-                            isInAgenda: data.id == '2',
-                            isCanAdd: false,
-                            isCanRemove: data.id == '2'
-                        }
-                    ];
-                    break;
-
-                case '/remove':
-                    r.data = [
-                        {
-                            id: '1',
-                            name: 'First session Jura FR',
-                            languageKey: 'fr',
-                            cantonKey: 'ju',
-                            isInAgenda: false,
-                            isCanAdd: true,
-                            isCanRemove: false
-                        },
-                        {
-                            id: '2',
-                            name: 'Second session Zug EN',
-                            languageKey: 'en',
-                            cantonKey: 'zu',
-                            isInAgenda: false,
-                            isCanAdd: true,
-                            isCanRemove: false
-                        }
-                    ];
-                    break;
-            }
-            return r;
-        }
-
         var options = {
-            name: 'bebebe',
-            mockAJAX: mockAjax,
-
-            addToMyAgendaUrl: '/add',
-            removeFromMyAgendaUrl: '/remove',
+            getSessionsUrl: '/getSessions',
+            addToMyAgendaUrl: '/addToAgenda',
+            removeFromMyAgendaUrl: '/removeFromAgenda',
+            downloadAllCalendarsUrl: 'https://www.google.com/calendar',
+            downloadMyProgrammeUrl: 'https://www.google.com',
             filters: [
                 {
-                    key: 'cantons',
+                    key: 'types',
                     label: '',
-                    fieldName: 'cantonKey',
-                    value: 'ju',
+                    fieldName: 'type',
+                    value: '',
                     values: [
-                        {label: 'All cantons', key: ''},
-                        {label: 'Jura', key: 'ju'},
-                        {label: 'Zug', key: 'zg'},
-                        {label: 'Zürich', key: 'zh'}
+                        {label: 'All types', key: ''},
+                        {label: 'Type 1', key: 1},
+                        {label: 'Type 2', key: 2},
+                        {label: 'Type 3', key: 3}
                     ]
                 },
                 {
-                    key: 'languages',
+                    key: 'dates',
                     label: '',
-                    fieldName: 'languageKey',
+                    fieldName: 'date',
+                    value: '19.07.2017',
                     values: [
-                        {label: 'All languages', key: ''},
-                        {label: 'English', key: 'en'},
-                        {label: 'French', key: 'fr'}
+                        {label: '19.07.2017', key: '19.07.2017'},
+                        {label: '20.07.2017', key: '20.07.2017'},
+                        {label: '21.07.2017', key: '21.07.2017'}
                     ]
                 }
             ],
@@ -112,28 +54,8 @@
                     descending: true
                 },
                 {
-                    key: 'canton',
-                    fieldName: 'cantonKey'
-                }
-            ],
-            sessions: [
-                {
-                    id: '1',
-                    name: 'First session Jura FR',
-                    languageKey: 'fr',
-                    cantonKey: 'JU',
-                    isInAgenda: false,
-                    isCanAdd: false,
-                    isCanRemove: false
-                },
-                {
-                    id: '2',
-                    name: 'Second session Zug EN',
-                    languageKey: 'en',
-                    cantonKey: 'ZG',
-                    isInAgenda: true,
-                    isCanAdd: false,
-                    isCanRemove: true
+                    key: 'type',
+                    fieldName: 'typeFormatted'
                 }
             ],
             translations:[
