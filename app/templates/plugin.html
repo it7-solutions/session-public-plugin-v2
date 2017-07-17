@@ -6,6 +6,8 @@
     <option *ngFor="let option of filters.filtersByKey.dates.values" [value]="option.key">{{option.label}}</option>
 </select>
 
+<day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
+
 <session-list [sortings]="sortings" [sessionList]="sessionList"></session-list>
 <my-agenda-connected-list [sessionList]="sessionList"></my-agenda-connected-list>
 

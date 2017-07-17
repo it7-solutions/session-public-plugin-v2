@@ -16,6 +16,7 @@ import {MyAgendaService} from './services/my-agenda.service';
 import {BusyPopupComponent} from './components/busy-popup.component';
 import {ValidationService} from './services/validation.service';
 import {MyAgendaConnectedListComponent} from './components/my-agenda-connected-list.component';
+import {DaySwitchComponent} from './components/day-switch.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {MyAgendaConnectedListComponent} from './components/my-agenda-connected-l
         SessionListComponent,
         MyAgendaListComponent,
         MyAgendaConnectedListComponent,
+        DaySwitchComponent,
         BusyPopupComponent
     ],
     bootstrap: [PluginComponent],

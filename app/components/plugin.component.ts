@@ -70,6 +70,16 @@ export class PluginComponent {
         }
     }
 
+    /**
+     * Изменяет значение фильтра дат при изменении через контрол со стрелосками
+     *
+     * @param date
+     */
+    public changeDayFilter(date: string) {
+        this.filters.filtersByKey['dates'].value = date;
+        this.applyFilter();
+    }
+
     // -- Private
 
     private onSessionsUpdate(sessions: AgendaSession[]) {

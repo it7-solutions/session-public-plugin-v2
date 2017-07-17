@@ -1,0 +1,10 @@
+<div>
+    <span [ngClass]="{allowed: this.indexedDays[this.day] && this.indexedDays[this.day].prev}" (click)="toPrevDay()">before</span>
+    <span>{{ indexedDays[day] ? indexedDays[day].original.label : '' }}</span>
+    <span [ngClass]="{allowed: this.indexedDays[this.day] && this.indexedDays[this.day].next}" (click)="toNextDay()">after</span>
+</div>
+<style>
+    .allowed {
+        color: green;
+    }
+</style>
