@@ -1,6 +1,6 @@
 import {Component, Output} from '@angular/core';
 import {PluginConfig} from '../services/plugin.config';
-import {ListOf} from '../models/list-of';
+import {ListItem, ListOf} from '../models/list-of';
 import {FilterListOf} from '../models/filter-list-of';
 import {SortListOf} from '../models/sort-list-of';
 import {AgendaSessionsService} from '../services/agenda-sessions.service';
@@ -20,6 +20,7 @@ export class PluginComponent {
     @Output() public filters: FilterListOf;
     @Output() public sortings: SortListOf;
     @Output() public validationState: any;
+    public myAgendaActive = false;
 
     constructor(
         public config: PluginConfig,
@@ -54,6 +55,26 @@ export class PluginComponent {
         // this.sortList();
 
         this.dm.getSessionRequest();
+    }
+
+    public onMyAgendaClick() {
+        this.myAgendaActive = !this.myAgendaActive;
+    }
+
+    public onExpandClick(item: ListItem) {
+        item.expanded = !item.expanded;
+    }
+
+    public onAddClick(item: ListItem) {
+        this.dm.addToMyAgendaRequest(item.original);
+    }
+
+    public onAddToWaitingListClick(item: ListItem) {
+        this.dm.addToWaitingListRequest(item.original);
+    }
+
+    public onRemoveClick(item: ListItem) {
+        this.dm.removeFromMyAgendaRequest(item.original);
     }
 
     /**

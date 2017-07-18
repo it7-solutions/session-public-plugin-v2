@@ -1,24 +1,73 @@
-<it7-ui-select
-        *ngIf="filters.filtersByKey.types"
-        [choices]="filters.filtersByKey.types.values"
-        [(model)]="filters.filtersByKey.types.value"
-        (modelChange)="applyFilter('types', $event)"
-></it7-ui-select>
-<it7-ui-select
-        [choices]="filters.filtersByKey.dates.values"
-        [(model)]="filters.filtersByKey.dates.value"
-        (modelChange)="applyFilter('dates', $event)"
-></it7-ui-select>
+<!-- Это будет блок для десктопно-планщетной верстки -->
+<div *ngIf="true">
+    <!-- Фильтры -->
+    <it7-ui-select
+            *ngIf="filters.filtersByKey.types"
+            [choices]="filters.filtersByKey.types.values"
+            [(model)]="filters.filtersByKey.types.value"
+            (modelChange)="applyFilter('types', $event)"
+    ></it7-ui-select>
+    <it7-ui-select
+            [choices]="filters.filtersByKey.dates.values"
+            [(model)]="filters.filtersByKey.dates.value"
+            (modelChange)="applyFilter('dates', $event)"
+    ></it7-ui-select>
 
-<day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
+    <!-- Переключалка дня -->
+    <day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
 
-<session-list [sortings]="sortings" [sessionList]="sessionList"></session-list>
-<my-agenda-connected-list [sessionList]="sessionList"></my-agenda-connected-list>
+    <!-- Вкл/выкл Мою Агенду -->
+    <div (click)="onMyAgendaClick()">My Agenda</div>
+    <div *ngIf="myAgendaActive">Моя агенда видна!</div>
+    <div *ngIf="!myAgendaActive">Моя агенда скрыта!</div>
 
-<div *ngIf="validationState.notEnoughSessionsInMyAgenda">You must choose more sessions</div>
+    <div *ngFor="let item of sessionList.items">
+        <div *ngIf="item.visible">
+        <span (click)="onExpandClick(item)">
+            {{ item.original.name }} | {{ item.original.date }}
+            <span *ngIf="item.original.isInAgenda ">Already in agenda</span>
+            <span *ngIf="item.original.isInWaitingList ">Already in Waiting list</span>
+        </span>
+            <span *ngIf="item.original.isCanAdd" (click)="onAddClick(item)">[+]</span>
+            <span *ngIf="item.original.isCanAddToWaitingList" (click)="onAddToWaitingListClick(item)">[+W]</span>
+            <span *ngIf="item.original.isCanRemove" (click)="onRemoveClick(item)">[-]</span>
+        </div>
+        <div *ngIf="item.visible && item.expanded">Expanded - {{ item.original.name }}</div>
+    </div>
 
-<br>
-<a *ngIf="config.downloadAllCalendarsUrl" href="{{ config.downloadAllCalendarsUrl }}">Download all calendars</a>
-<a *ngIf="config.downloadMyProgrammeUrl" href="{{ config.downloadMyProgrammeUrl }}">Download my programme</a>
+    <br>
+    <a *ngIf="config.downloadAllCalendarsUrl" href="{{ config.downloadAllCalendarsUrl }}">Download all calendars</a>
+    <a *ngIf="config.downloadMyProgrammeUrl" href="{{ config.downloadMyProgrammeUrl }}">Download my programme</a>
+</div>
+
+<!-- Это будет блок для мобильной верстки -->
+<div *ngIf="false">
+    <!-- Фильтры -->
+    <it7-ui-select
+            *ngIf="filters.filtersByKey.types"
+            [choices]="filters.filtersByKey.types.values"
+            [(model)]="filters.filtersByKey.types.value"
+            (modelChange)="applyFilter('types', $event)"
+    ></it7-ui-select>
+    <it7-ui-select
+            [choices]="filters.filtersByKey.dates.values"
+            [(model)]="filters.filtersByKey.dates.value"
+            (modelChange)="applyFilter('dates', $event)"
+    ></it7-ui-select>
+
+    <!-- Вкл/выкл Мою Агенду -->
+    <div (click)="onMyAgendaClick()">My Agenda</div>
+
+    <!-- Переключалка дня -->
+    <day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
+
+    <my-agenda-connected-list [sessionList]="sessionList"></my-agenda-connected-list>
+
+    <session-list [sortings]="sortings" [sessionList]="sessionList"></session-list>
+
+    <br>
+    <a *ngIf="config.downloadAllCalendarsUrl" href="{{ config.downloadAllCalendarsUrl }}">Download all calendars</a>
+    <a *ngIf="config.downloadMyProgrammeUrl" href="{{ config.downloadMyProgrammeUrl }}">Download my programme</a>
+</div>
 
 <busy-popup></busy-popup>
