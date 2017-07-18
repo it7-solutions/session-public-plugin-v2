@@ -17,15 +17,13 @@
     <script>
         var options = {
             getSessionsUrl: '/getSessions',
-            addToMyAgendaUrl: '/addToAgenda',
-            removeFromMyAgendaUrl: '/removeFromAgenda',
             downloadAllCalendarsUrl: 'https://www.google.com/calendar',
             downloadMyProgrammeUrl: 'https://www.google.com',
             filters: [
                 {
                     key: 'types',
                     label: '',
-                    fieldName: 'type',
+                    fieldName: 'type_id',
                     value: '',
                     values: [
                         {label: 'All types', key: ''},
@@ -38,7 +36,7 @@
                     key: 'dates',
                     label: '',
                     fieldName: 'date',
-                    value: '19.07.2017',
+                    value: '20.07.2017',
                     values: [
                         {label: '19.07.2017', key: '19.07.2017'},
                         {label: '20.07.2017', key: '20.07.2017'},

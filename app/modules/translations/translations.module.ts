@@ -5,8 +5,6 @@ import {TranslationsService} from './services/translations.service';
 import {TranslationPipe} from './pipes/translation.pipe';
 
 @NgModule({
-    // imports: [BrowserModule],
-    //bootstrap: [ChooseCantonComponent]
     providers: [TranslationsService],
     declarations: [TranslationPipe],
     exports: [TranslationPipe]

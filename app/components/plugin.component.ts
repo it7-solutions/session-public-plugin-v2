@@ -56,15 +56,17 @@ export class PluginComponent {
         this.dm.getSessionRequest();
     }
 
-    // -- Component events
-
-    public onFilterChange(event: any) {
-        let select = event.target;
-        let filterKey = select.getAttribute('data-key');
+    /**
+     * Применяет изменения фиильтра
+     *
+     * @param value
+     * @param filterKey
+     */
+    public applyFilter(filterKey: string, value: any) {
         let filter = this.filters.filtersByKey[filterKey];
         if (filter) {
-            filter.value = select.value;
-            this.applyFilter();
+            filter.value = value;
+            this.applyFilterToList();
         } else {
             this.showError('Not found instance of class "Filter" for changed filter.');
         }
@@ -76,19 +78,18 @@ export class PluginComponent {
      * @param date
      */
     public changeDayFilter(date: string) {
-        this.filters.filtersByKey['dates'].value = date;
-        this.applyFilter();
+        this.applyFilter('dates', date);
     }
 
     // -- Private
 
     private onSessionsUpdate(sessions: AgendaSession[]) {
         this.sessionList.update(sessions);
-        this.applyFilter();
+        this.applyFilterToList();
         this.sortList();
     }
 
-    private applyFilter() {
+    private applyFilterToList() {
         this.filters.applyToList(this.sessionList);
     }
 

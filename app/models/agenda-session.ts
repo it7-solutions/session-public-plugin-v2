@@ -23,11 +23,19 @@ export class AgendaSession {
 
     // for controls
     isInAgenda: boolean = false;
+    isInWaitingList: boolean = false;
     isCanAdd: boolean = false;
+    isCanAddToWaitingList: boolean = false;
     isCanRemove: boolean = false;
+
+    // for actions
+    addToMyAgendaUrl: string = '';
+    addToWaitingListUrl: string = '';
+    removeFromMyAgendaUrl: string = '';
 
     constructor(srcData: AgendaSession) {
         Object.assign(this, srcData);
+        this.type_id = this.type_id + '';
 
         this.resetFlags();
     }

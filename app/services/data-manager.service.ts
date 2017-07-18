@@ -8,6 +8,7 @@ import {PopupService} from './popup.service';
 import {BusyPopup} from '../components/busy-popup.component';
 import {AgendaSessionsService} from './agenda-sessions.service';
 import {MyAgendaService} from './my-agenda.service';
+import {AgendaSession} from '../models/agenda-session';
 
 
 @Injectable()
@@ -31,7 +32,7 @@ export class DataManagerService {
     getSessionRequest() {
         this.showLoading();
         let data = JSON.stringify({});
-        return this.it7Ajax
+        this.it7Ajax
             .post(this.config.getSessionsUrl, {data})
             .then(
                 res => {
@@ -42,11 +43,11 @@ export class DataManagerService {
             );
     }
 
-    addToMyAgendaRequest(data: Object) {
+    addToMyAgendaRequest(session: AgendaSession) {
         this.showLoading();
-        data = JSON.stringify(data);
-        return this.it7Ajax
-            .post(this.config.addToMyAgendaUrl, {data})
+        let data = JSON.stringify(session);
+        this.it7Ajax
+            .post(session.addToMyAgendaUrl, {data})
             .then(
                 res => {
                     this.hideLoading();
@@ -56,11 +57,25 @@ export class DataManagerService {
             );
     }
 
-    removeFromMyAgendaRequest(data: Object) {
+    addToWaitingListRequest(session: AgendaSession) {
         this.showLoading();
-        data = JSON.stringify(data);
-        return this.it7Ajax
-            .post(this.config.removeFromMyAgendaUrl, {data})
+        let data = JSON.stringify(session);
+        this.it7Ajax
+            .post(session.addToWaitingListUrl, {data})
+            .then(
+                res => {
+                    this.hideLoading();
+                    this.checkAndUpdateList(res);
+                    return res;
+                }
+            );
+    }
+
+    removeFromMyAgendaRequest(session: AgendaSession) {
+        this.showLoading();
+        let data = JSON.stringify(session);
+        this.it7Ajax
+            .post(session.removeFromMyAgendaUrl, {data})
             .then(
                 res => {
                     this.hideLoading();

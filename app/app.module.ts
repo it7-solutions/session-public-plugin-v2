@@ -17,6 +17,7 @@ import {BusyPopupComponent} from './components/busy-popup.component';
 import {ValidationService} from './services/validation.service';
 import {MyAgendaConnectedListComponent} from './components/my-agenda-connected-list.component';
 import {DaySwitchComponent} from './components/day-switch.component';
+import {It7UiModule} from './modules/ui/it7-ui.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {DaySwitchComponent} from './components/day-switch.component';
         BrowserModule,
         FormsModule,
         HttpModule,
-        TranslationsModule
+        TranslationsModule,
+        It7UiModule
     ],
     declarations: [
         PluginComponent,

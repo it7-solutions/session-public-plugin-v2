@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 
@@ -18,15 +18,15 @@ export class AgendaSessionsService {
     public update(src: AgendaSession[]) {
         this.sessions.splice(0, this.sessions.length);
         src.forEach((session: AgendaSession) => {
-            this.sessions.push(new AgendaSession(session))
+            this.sessions.push(new AgendaSession(session));
         });
         this.resetSessionsFlags();
         this._onUpdate.next(this.sessions);
     }
 
-    private resetSessionsFlags(){
+    private resetSessionsFlags() {
         this.sessions.forEach((session: AgendaSession) => {
             session.resetFlags();
-        })
+        });
     }
 }

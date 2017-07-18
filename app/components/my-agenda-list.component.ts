@@ -5,8 +5,8 @@ import {AgendaSession} from '../models/agenda-session';
 import {DataManagerService} from '../services/data-manager.service';
 
 /**
- * Список сессий в агенде выводимый с теми же фильтрами, что и список сессий.
- * Отакое.
+ * Список сессий в агенде выводимый без учета фильтров списка сессий.
+ * Сейчас не используется
  */
 @Component({
     selector: 'my-agenda-list',

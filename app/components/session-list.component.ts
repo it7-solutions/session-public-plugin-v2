@@ -30,6 +30,10 @@ export class SessionListComponent {
         this.dm.addToMyAgendaRequest(item.original);
     }
 
+    public onAddToWaitingListClick(item: ListItem) {
+        this.dm.addToWaitingListRequest(item.original);
+    }
+
     public onRemoveClick(item: ListItem) {
         this.dm.removeFromMyAgendaRequest(item.original);
     }

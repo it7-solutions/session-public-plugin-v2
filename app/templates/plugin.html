@@ -1,11 +1,13 @@
-<select data-key="types" (change)="onFilterChange($event)" [(ngModel)]="filters.filtersByKey.types.value">
-    <option *ngFor="let option of filters.filtersByKey.types.values" [value]="option.key">{{option.label}}</option>
-</select>
-
-<select *ngIf="filters.filtersByKey.dates.values.length > 1" data-key="dates" (change)="onFilterChange($event)"
-        [(ngModel)]="filters.filtersByKey.dates.value">
-    <option *ngFor="let option of filters.filtersByKey.dates.values" [value]="option.key">{{option.label}}</option>
-</select>
+<it7-ui-select
+        [choices]="filters.filtersByKey.types.values"
+        [(model)]="filters.filtersByKey.types.value"
+        (modelChange)="applyFilter('types', $event)"
+></it7-ui-select>
+<it7-ui-select
+        [choices]="filters.filtersByKey.dates.values"
+        [(model)]="filters.filtersByKey.dates.value"
+        (modelChange)="applyFilter('dates', $event)"
+></it7-ui-select>
 
 <day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
 

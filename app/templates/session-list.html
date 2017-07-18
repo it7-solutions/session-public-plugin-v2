@@ -6,8 +6,10 @@
         <span (click)="onExpandClick(item)">
             {{ item.original.name }} | {{ item.original.date }}
             <span *ngIf="item.original.isInAgenda ">Already in agenda</span>
-            <span *ngIf="item.original.isCanAdd" (click)="onAddClick(item)">[+]</span>
+            <span *ngIf="item.original.isInWaitingList ">Already in Waiting list</span>
         </span>
+        <span *ngIf="item.original.isCanAdd" (click)="onAddClick(item)">[+]</span>
+        <span *ngIf="item.original.isCanAddToWaitingList" (click)="onAddToWaitingListClick(item)">[+W]</span>
         <span *ngIf="item.original.isCanRemove" (click)="onRemoveClick(item)">[-]</span>
     </div>
     <div *ngIf="item.visible && item.expanded">Expanded - {{ item.original.name }}</div>
