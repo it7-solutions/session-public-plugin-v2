@@ -23,7 +23,7 @@ export class PluginConfig {
     onTranslate: any;
 
     static buildTemplateUrl(path: string) {
-        let base = (window && window['__it7_session_public_plugin__']) ? window['__it7_session_public_plugin__'] : 'app';
+        let base = (window && window['__it7_session_public_plugin_v2__']) ? window['__it7_session_public_plugin_v2__'] : 'app';
         return base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '');
     }
     constructor(options: any) {
