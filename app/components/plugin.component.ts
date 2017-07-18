@@ -11,7 +11,7 @@ import {ValidationService} from '../services/validation.service';
 import {DataManagerService} from '../services/data-manager.service';
 
 @Component({
-    selector: 'session-public-plugin',
+    selector: 'session-public-plugin-v2',
     templateUrl: PluginConfig.buildTemplateUrl('templates/plugin.html')
 })
 export class PluginComponent {
