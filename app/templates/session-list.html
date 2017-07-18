@@ -1,6 +1,6 @@
 <h3>{{ 'Sessions' | translation }}</h3>
-<span (click)="onSortClick(sortings.sortingsByKey['name'])">Name <span *ngIf="sortings.sortingsByKey['name'].active">{{ sortings.sortingsByKey['name'].descending ? 'V' : '^' }}</span></span> |
-<span (click)="onSortClick(sortings.sortingsByKey['type'])">Type <span *ngIf="sortings.sortingsByKey['type'].active">{{ sortings.sortingsByKey['type'].descending ? 'V' : '^' }}</span></span>
+<!--<span (click)="onSortClick(sortings.sortingsByKey['name'])">Name <span *ngIf="sortings.sortingsByKey['name'].active">{{ sortings.sortingsByKey['name'].descending ? 'V' : '^' }}</span></span> |-->
+<!--<span (click)="onSortClick(sortings.sortingsByKey['type'])">Type <span *ngIf="sortings.sortingsByKey['type'].active">{{ sortings.sortingsByKey['type'].descending ? 'V' : '^' }}</span></span>-->
 <div *ngFor="let item of sessionList.items">
     <div *ngIf="item.visible">
         <span (click)="onExpandClick(item)">

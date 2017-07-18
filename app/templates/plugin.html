@@ -1,4 +1,5 @@
 <it7-ui-select
+        *ngIf="filters.filtersByKey.types"
         [choices]="filters.filtersByKey.types.values"
         [(model)]="filters.filtersByKey.types.value"
         (modelChange)="applyFilter('types', $event)"
