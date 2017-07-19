@@ -15,6 +15,18 @@
 
     <script src="systemjs.config.js"></script>
     <script>
+        var ersNg2Helper = {
+            createUiStyle: function(el){
+                console.log('ersNg2Helper.createUiStyle', el);
+            },
+            updateUiStyle: function(el){
+                console.log('ersNg2Helper.createUiStyle', el);
+            },
+            destroyUiStyle: function(el){
+                console.log('ersNg2Helper.createUiStyle', el);
+            }
+        };
+
         var options = {
             getSessionsUrl: '/getSessions',
             downloadAllCalendarsUrl: 'https://www.google.com/calendar',
@@ -63,6 +75,7 @@
             onTranslate: function(){},
             allowNextStep: function(){console.log('Next Step ON')},
             disallowNextStep: function(){console.log('Next Step OFF')},
+            ersNg2Helper: ersNg2Helper,
             minSessionsInMyAgenda: 1
         };
 

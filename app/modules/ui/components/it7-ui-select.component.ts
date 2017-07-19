@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 
 import {PluginConfig} from '../../../services/plugin.config';
 
@@ -10,6 +10,8 @@ export class It7IuSelectComponent implements AfterViewInit, OnDestroy {
     public _choices: any[] = [];
     public _model: string = '';
     private stylized = false;
+
+    @ViewChild('selectElement') selectElement: ElementRef;
 
     @Input() set choices(choices: any[]) {
         this._choices = choices;
@@ -23,7 +25,11 @@ export class It7IuSelectComponent implements AfterViewInit, OnDestroy {
 
     @Output() modelChange = new EventEmitter<string>();
 
-    // Реализация OnInit
+
+    constructor(public config: PluginConfig) {
+    }
+
+// Реализация OnInit
     ngAfterViewInit() {
         this.callCreateStyle();
     }
@@ -39,17 +45,24 @@ export class It7IuSelectComponent implements AfterViewInit, OnDestroy {
     }
 
     private callCreateStyle() {
-        console.log('callCreateStyle', (<any>document.getElementById('test')).value);
+        if (this.config.ersNg2Helper && this.config.ersNg2Helper.createUiStyle) {
+            this.config.ersNg2Helper.createUiStyle(this.selectElement.nativeElement);
+        }
         this.stylized = true;
     }
 
     private callUpdateStyle() {
         if (this.stylized) {
-            console.log('callUpdateStyle', (<any>document.getElementById('test')).value);
+            if (this.config.ersNg2Helper && this.config.ersNg2Helper.updateUiStyle) {
+                this.config.ersNg2Helper.updateUiStyle(this.selectElement.nativeElement);
+            }
         }
     }
 
     private callDestroyStyle() {
-        console.log('callDestroyStylize', (<any>document.getElementById('test')).value);
+        if (this.config.ersNg2Helper && this.config.ersNg2Helper.destroyUiStyle) {
+            this.config.ersNg2Helper.destroyUiStyle(this.selectElement.nativeElement);
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 <div>
-    <select id="test" (change)="onSelectChange($event)" [(ngModel)]="_model">
+    <select #selectElement id="test" (change)="onSelectChange($event)" [(ngModel)]="_model">
         <option *ngFor="let choice of _choices" [value]="choice.key">{{choice.label}}</option>
     </select>
 </div>
