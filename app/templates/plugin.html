@@ -72,4 +72,6 @@
     <a *ngIf="config.downloadMyProgrammeUrl" href="{{ config.downloadMyProgrammeUrl }}">Download my programme</a>
 </div>
 
+<div *ngIf="warningMessage">{{ warningMessage }}</div>
+
 <busy-popup></busy-popup>

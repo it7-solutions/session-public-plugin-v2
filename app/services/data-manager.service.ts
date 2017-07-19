@@ -14,6 +14,8 @@ import {AgendaSession} from '../models/agenda-session';
 @Injectable()
 export class DataManagerService {
     private popup: BusyPopup;
+    public allowNextStep: true;
+    public warningMessage: '';
 
     constructor(private config: PluginConfig,
                 private err: It7ErrorService,
@@ -97,11 +99,18 @@ export class DataManagerService {
         }
         console.log('res', res);
         if (res && res.sessions && Array.isArray(res.sessions)) {
+            this.updateOthers(res);
             this.agendaSessions.update(res.sessions as any);
             this.myAgenda.updateFromSessions(this.agendaSessions.sessions);
         } else {
             this.err.fire('Parse error: Incompatible session list format.');
         }
+    }
+
+    private updateOthers(data: any) {
+        // TODO нужно вынести параметры bp dm в отдельную сущность
+        this.warningMessage = data.warningMessage ? data.warningMessage : '';
+        this.allowNextStep = undefined === data.allowNextStep ? true : data.allowNextStep;
     }
 
     private showLoading() {

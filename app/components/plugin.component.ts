@@ -22,6 +22,7 @@ export class PluginComponent {
     @Output() public validationState: any;
     public myAgendaActive = false;
     public windowWidthMode = ''; // 's' | 'm'
+    public warningMessage = '';
 
     constructor(private ref: ChangeDetectorRef,
                 public config: PluginConfig,
@@ -103,7 +104,14 @@ export class PluginComponent {
 
     // -- Private
 
+    private updateOther() {
+        // TODO нужно вынести параметры bp dm в отдельную сущность
+        this.warningMessage = this.dm.warningMessage;
+        this.setNextStepAvailability(!!this.dm.allowNextStep);
+    }
+
     private onSessionsUpdate(sessions: AgendaSession[]) {
+        this.updateOther();
         this.sessionList.update(sessions);
         this.applyFilterToList();
         this.sortList();
@@ -144,6 +152,12 @@ export class PluginComponent {
         if (this.config.ersNg2Helper) {
             this.windowWidthMode = this.config.ersNg2Helper.getWindowWidth() < this.config.widthThreshold ? 's' : 'm';
             this.ref.detectChanges();
+        }
+    }
+
+    private setNextStepAvailability(state: boolean) {
+        if (this.config.ersNg2Helper) {
+            this.config.ersNg2Helper.setNextStepAvailability(state);
         }
     }
 }
