@@ -1,5 +1,6 @@
 <!-- Это будет блок для десктопно-планщетной верстки -->
-<div *ngIf="true">
+<div *ngIf="isMoreSmall()">
+    <div> Блок для размера M (планшет+десктоп)</div>
     <!-- Фильтры -->
     <it7-ui-select
             *ngIf="filters.filtersByKey.types"
@@ -41,7 +42,8 @@
 </div>
 
 <!-- Это будет блок для мобильной верстки -->
-<div *ngIf="false">
+<div *ngIf="isSmall()">
+    <div> Блок для размера S (мобила)</div>
     <!-- Фильтры -->
     <it7-ui-select
             *ngIf="filters.filtersByKey.types"

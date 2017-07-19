@@ -5,6 +5,7 @@ import {Sorting} from '../models/sort-list-of';
 @Injectable()
 export class PluginConfig {
     ersNg2Helper: any;
+    widthThreshold: number;
 
     addToMyAgendaUrl: string = '';
     getSessionsUrl: string = '';

@@ -1,4 +1,4 @@
-import {Component, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, Output} from '@angular/core';
 import {PluginConfig} from '../services/plugin.config';
 import {ListItem, ListOf} from '../models/list-of';
 import {FilterListOf} from '../models/filter-list-of';
@@ -21,15 +21,15 @@ export class PluginComponent {
     @Output() public sortings: SortListOf;
     @Output() public validationState: any;
     public myAgendaActive = false;
+    public windowWidthMode = ''; // 's' | 'm'
 
-    constructor(
-        public config: PluginConfig,
-        private err: It7ErrorService,
-        private agendaSessions: AgendaSessionsService,
-        myAgenda: MyAgendaService,
-        validation: ValidationService,
-        private dm: DataManagerService
-    ) {
+    constructor(private ref: ChangeDetectorRef,
+                public config: PluginConfig,
+                private err: It7ErrorService,
+                private agendaSessions: AgendaSessionsService,
+                myAgenda: MyAgendaService,
+                validation: ValidationService,
+                private dm: DataManagerService) {
         validation.setMyAgenda(myAgenda);
         this.validationState = validation.state;
         this.myAgenda = myAgenda;
@@ -51,10 +51,9 @@ export class PluginComponent {
     public ngOnInit() {
         this.agendaSessions.onUpdate.subscribe(sessions => this.onSessionsUpdate(sessions));
         this.onSessionsUpdate(this.agendaSessions.sessions);
-        // this.applyFilter();
-        // this.sortList();
 
         this.dm.getSessionRequest();
+        this.initWindowModeSwitch();
     }
 
     public onMyAgendaClick() {
@@ -121,6 +120,30 @@ export class PluginComponent {
     private showError(msg: string) {
         if (console && console.error) {
             console.error(msg);
+        }
+    }
+
+    private initWindowModeSwitch() {
+        if (this.config.ersNg2Helper) {
+            this.config.ersNg2Helper.onWindowResize(() => {
+                this.updateWindowMode();
+            });
+        }
+        this.updateWindowMode();
+    }
+
+    isMoreSmall() {
+        return 'm' === this.windowWidthMode;
+    }
+
+    isSmall() {
+        return 's' === this.windowWidthMode;
+    }
+
+    private updateWindowMode() {
+        if (this.config.ersNg2Helper) {
+            this.windowWidthMode = this.config.ersNg2Helper.getWindowWidth() < this.config.widthThreshold ? 's' : 'm';
+            this.ref.detectChanges();
         }
     }
 }

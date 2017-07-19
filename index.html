@@ -24,6 +24,14 @@
             },
             destroyUiStyle: function(el){
                 console.log('ersNg2Helper.createUiStyle', el);
+            },
+            getWindowWidth: function(){
+                return window && window.innerWidth;
+            },
+            onWindowResize: function(callback){
+                if(callback) {
+                    window.onresize = function(){callback();};
+                }
             }
         };
 
@@ -76,6 +84,7 @@
             allowNextStep: function(){console.log('Next Step ON')},
             disallowNextStep: function(){console.log('Next Step OFF')},
             ersNg2Helper: ersNg2Helper,
+            widthThreshold: 500,
             minSessionsInMyAgenda: 1
         };
 
