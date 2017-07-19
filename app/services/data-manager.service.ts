@@ -9,6 +9,7 @@ import {BusyPopup} from '../components/busy-popup.component';
 import {AgendaSessionsService} from './agenda-sessions.service';
 import {MyAgendaService} from './my-agenda.service';
 import {AgendaSession} from '../models/agenda-session';
+import {MessagePopup} from '../components/message-popup.component';
 
 
 @Injectable()
@@ -97,11 +98,11 @@ export class DataManagerService {
                 this.err.fire('Request to the server was not satisfied. Status ' + res.status);
             }
         }
-        console.log('res', res);
         if (res && res.sessions && Array.isArray(res.sessions)) {
             this.updateOthers(res);
             this.agendaSessions.update(res.sessions as any);
             this.myAgenda.updateFromSessions(this.agendaSessions.sessions);
+            this.showActionResponseMessage(res);
         } else {
             this.err.fire('Parse error: Incompatible session list format.');
         }
@@ -111,6 +112,13 @@ export class DataManagerService {
         // TODO нужно вынести параметры bp dm в отдельную сущность
         this.warningMessage = data.warningMessage ? data.warningMessage : '';
         this.allowNextStep = undefined === data.allowNextStep ? true : data.allowNextStep;
+    }
+
+    private showActionResponseMessage(res: any) {
+        if (res.actionResponseMessage) {
+            this.popup = new MessagePopup(res.actionResponseMessage);
+            this.popupService.showPopup(this.popup);
+        }
     }
 
     private showLoading() {

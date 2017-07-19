@@ -11,8 +11,6 @@
 
     .popup {
         position: fixed;
-        width: 100px;
-        height: 100px;
         left: 0;
         top: 0;
         background-color: #f8f8f8;
@@ -20,4 +18,7 @@
     }
 </style>
 <div class="overlay" *ngIf="popup" [style.width]="overlayWidth" [style.height]="overlayHeight"></div>
-<div class="popup" *ngIf="popup" [style.left]="styleLeft" [style.top]="styleTop">Busy</div>
+<div class="popup" *ngIf="popup" [style.left]="styleLeft" [style.top]="styleTop" [style.width.px]="width" [style.height.px]="height">
+    {{ popup.message }}<br>
+    <a href="javascript:;" (click)="hidePopup()">Close</a>
+</div>
