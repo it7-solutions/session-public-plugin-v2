@@ -15,7 +15,7 @@
     ></it7-ui-select>
 
     <!-- Переключалка дня -->
-    <day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
+    <day-switch [showArrowText]="true" (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value"></day-switch>
 
     <!-- Вкл/выкл Мою Агенду -->
     <div (click)="onMyAgendaClick()">My Agenda</div>
