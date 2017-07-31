@@ -32,6 +32,7 @@ export class AgendaSession {
     addToMyAgendaUrl: string = '';
     addToWaitingListUrl: string = '';
     removeFromMyAgendaUrl: string = '';
+    removeFromWaitingListUrl: string = '';
 
     constructor(srcData: AgendaSession) {
         Object.assign(this, srcData);

@@ -77,6 +77,10 @@ export class PluginComponent {
         this.dm.removeFromMyAgendaRequest(item.original);
     }
 
+    public onRemoveFromWaitingListClick(item: ListItem) {
+        this.dm.removeFromWaitingListRequest(item.original);
+    }
+
     /**
      * Применяет изменения фиильтра
      *

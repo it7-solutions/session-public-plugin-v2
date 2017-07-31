@@ -88,6 +88,20 @@ export class DataManagerService {
             );
     }
 
+    removeFromWaitingListRequest(session: AgendaSession) {
+        this.showLoading();
+        let data = JSON.stringify(session);
+        this.it7Ajax
+            .post(session.removeFromWaitingListUrl, {data})
+            .then(
+                res => {
+                    this.hideLoading();
+                    this.checkAndUpdateList(res);
+                    return res;
+                }
+            );
+    }
+
     // -- Private
 
     private checkAndUpdateList(res: any) {
