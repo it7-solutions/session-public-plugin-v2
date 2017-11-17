@@ -1,4 +1,4 @@
-<div>
+<div [style.padding-right.px]="myAgendaActive ? '5' : '0'">
     <span [ngClass]="{allowed: this.indexedDays[this.day] && this.indexedDays[this.day].prev}" (click)="toPrevDay()">
         <span *ngIf="showArrowText">Prev</span>&lt;&lt;
     </span>
@@ -7,6 +7,7 @@
         <span *ngIf="showArrowText">Next</span>&gt;&gt;
     </span>
 </div>
+<div>myAgendaActive: {{myAgendaActive}}</div>
 <style>
     .allowed {
         color: green;
