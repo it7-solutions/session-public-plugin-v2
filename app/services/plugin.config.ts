@@ -14,6 +14,7 @@ export class PluginConfig {
     downloadMyProgrammeUrl: string = '';
 
     minSessionsInMyAgenda: number = 0;
+    isPaidSessions = false;
 
     allowNextStep: () => void;
     disallowNextStep: () => void;

@@ -13,7 +13,10 @@ import {ListItem, ListOf} from '../models/list-of';
 export class MyAgendaConnectedListComponent {
     @Input() public sessionList: ListOf;
 
-    constructor(private dm: DataManagerService) {
+    constructor(
+        protected dm: DataManagerService,
+        protected config: PluginConfig
+    ) {
     }
 
     // Component events

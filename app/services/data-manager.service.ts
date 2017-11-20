@@ -17,6 +17,8 @@ export class DataManagerService {
     private popup: BusyPopup;
     public allowNextStep: true;
     public warningMessage: '';
+    public selectedSessionsNumber: 0;
+    public totalCost: '';
 
     constructor(private config: PluginConfig,
                 private err: It7ErrorService,
@@ -123,9 +125,11 @@ export class DataManagerService {
     }
 
     private updateOthers(data: any) {
-        // TODO нужно вынести параметры bp dm в отдельную сущность
+        // TODO нужно бы вынести параметры bp dm в отдельную сущность
         this.warningMessage = data.warningMessage ? data.warningMessage : '';
         this.allowNextStep = undefined === data.allowNextStep ? true : data.allowNextStep;
+        this.selectedSessionsNumber = undefined === data.selectedSessionsNumber ? 0 : data.selectedSessionsNumber;
+        this.totalCost = undefined === data.totalCost ? '' : data.totalCost;
     }
 
     private showActionResponseMessage(res: any) {

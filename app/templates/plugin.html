@@ -18,9 +18,10 @@
     <day-switch [showArrowText]="true" (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value" [myAgendaActive]="myAgendaActive"></day-switch>
 
     <!-- Вкл/выкл Мою Агенду -->
-    <div (click)="onMyAgendaClick()">My Agenda</div>
+    <div (click)="onMyAgendaClick()">My Agenda ({{ dm.selectedSessionsNumber }})</div>
     <div *ngIf="myAgendaActive">Моя агенда видна!</div>
     <div *ngIf="!myAgendaActive">Моя агенда скрыта!</div>
+    <div *ngIf="myAgendaActive && config.isPaidSessions">Моя агенда видна, есть плагные сесии и тотал : {{ dm.totalCost }}!</div>
 
     <div *ngFor="let item of sessionList.items">
         <div *ngIf="item.visible">
@@ -58,7 +59,7 @@
     ></it7-ui-select>
 
     <!-- Вкл/выкл Мою Агенду -->
-    <div (click)="onMyAgendaClick()">My Agenda</div>
+    <div (click)="onMyAgendaClick()">My Agenda ({{ dm.selectedSessionsNumber }})</div>
 
     <!-- Переключалка дня -->
     <day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value" [myAgendaActive]="myAgendaActive"></day-switch>

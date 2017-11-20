@@ -30,7 +30,7 @@ export class PluginComponent {
                 private agendaSessions: AgendaSessionsService,
                 myAgenda: MyAgendaService,
                 validation: ValidationService,
-                private dm: DataManagerService) {
+                protected dm: DataManagerService) {
         validation.setMyAgenda(myAgenda);
         this.validationState = validation.state;
         this.myAgenda = myAgenda;

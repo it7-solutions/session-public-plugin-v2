@@ -13,7 +13,10 @@ export class SessionListComponent {
     @Input() public sessionList: ListOf;
     @Input() public sortings: SortListOf;
 
-    constructor(private dm: DataManagerService) {
+    constructor(
+        protected dm: DataManagerService,
+        protected config: PluginConfig
+    ) {
     }
 
     // -- Component events
