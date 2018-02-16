@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Output} from '@angular/core';
 import {PluginConfig} from '../services/plugin.config';
 import {ListItem, ListOf} from '../models/list-of';
-import {FilterListOf} from '../models/filter-list-of';
+import {Filter, FilterListOf} from '../models/filter-list-of';
 import {SortListOf} from '../models/sort-list-of';
 import {AgendaSessionsService} from '../services/agenda-sessions.service';
 import {MyAgendaService} from '../services/my-agenda.service';
@@ -9,6 +9,7 @@ import {AgendaSession} from '../models/agenda-session';
 import {It7ErrorService} from '../services/it7-error.service';
 import {ValidationService} from '../services/validation.service';
 import {DataManagerService} from '../services/data-manager.service';
+import {Day} from '../models/day';
 
 @Component({
     selector: 'session-public-plugin-v2',
@@ -24,20 +25,26 @@ export class PluginComponent {
     public windowWidthMode = ''; // 's' | 'm'
     public warningMessage = '';
 
+    /**
+     * Массив дней для вывода в режиме "Все дни на одной странице"
+     *
+     * @type {any[]}
+     */
+    public days: Day[] = [];
+
     constructor(private ref: ChangeDetectorRef,
                 public config: PluginConfig,
                 private err: It7ErrorService,
                 private agendaSessions: AgendaSessionsService,
                 myAgenda: MyAgendaService,
                 validation: ValidationService,
-                protected dm: DataManagerService) {
+                protected dm: DataManagerService
+    ) {
         validation.setMyAgenda(myAgenda);
         this.validationState = validation.state;
         this.myAgenda = myAgenda;
 
-        // Init Filters from config
-        this.filters = new FilterListOf();
-        this.filters.add(config.filters);
+        this.initFilters();
 
         // Create List from sessions
         this.sessionList = new ListOf();
@@ -45,6 +52,8 @@ export class PluginComponent {
         // Create sorting
         this.sortings = new SortListOf(this.sessionList);
         this.sortings.add(config.sortings);
+
+        this.buildDaysAndSessions();
     }
 
     // -- Angular events
@@ -91,7 +100,7 @@ export class PluginComponent {
         let filter = this.filters.filtersByKey[filterKey];
         if (filter) {
             filter.value = value;
-            this.applyFilterToList();
+            this.applyFilterToLists();
         } else {
             this.showError('Not found instance of class "Filter" for changed filter.');
         }
@@ -116,13 +125,36 @@ export class PluginComponent {
 
     private onSessionsUpdate(sessions: AgendaSession[]) {
         this.updateOther();
-        this.sessionList.update(sessions);
-        this.applyFilterToList();
+        this.updateListsOfSessions(sessions);
+        this.applyFilterToLists();
         this.sortList();
     }
 
-    private applyFilterToList() {
+    /**
+     * Применяет фильтры к спискам сессий (основному и по дням)
+     * Обновляет флаги visible и first для дней (в режиме "все дни на одной странице")
+     */
+    private applyFilterToLists() {
+        // Применяет фильтр к основному списку сессий
         this.filters.applyToList(this.sessionList);
+
+        let lookingForFirst = true;
+        this.days.forEach(d => {
+            // Применяет фильтр к списку сессий дня
+            this.filters.applyToList(d.sessionList);
+
+            // Обновляет флаг visible у дня
+            d.visible = !!d.sessionList.items.find(i => i.visible);
+
+            // Обновляет флаг first у дня
+            if(d.visible && lookingForFirst) {
+                d.first = true;
+                lookingForFirst = false;
+            } else {
+                d.first = false;
+            }
+        });
+
     }
 
     private sortList() {
@@ -163,5 +195,58 @@ export class PluginComponent {
         if (this.config.ersNg2Helper) {
             this.config.ersNg2Helper.setNextStepAvailability(state);
         }
+    }
+
+    /**
+     * Инициализирует фильтры для списка сессий
+     *
+     * Если установлен флаг "все дни на одной странице" фильтр по дням игнорируется
+     */
+    private initFilters() {
+        // Выбирает фильтры
+        let filters: Filter[];
+        if(this.config.showAllDaysAtOnce){
+            filters = this.config.filters.filter(f => 'date' !== f.fieldName);
+        } else {
+            filters = this.config.filters;
+        }
+
+        // Инициализирует выбранные филтры
+        this.filters = new FilterListOf();
+        this.filters.add(filters);
+    }
+
+    /**
+     * Строит массив Обьектов Day для отображения в режиме "Все дни на одной странице"
+     *
+     * - ищет ф фильтрах фильтр по полю "date"
+     * - берет только НЕ пустые значения
+     * - создает из них обьект и заполняет массив
+     */
+    private buildDaysAndSessions() {
+        if(this.config.showAllDaysAtOnce) {
+            let daysFilter = this.config.filters.find(f => 'date' === f.fieldName);
+            if(daysFilter) {
+                this.days = daysFilter.values
+                    .filter(v => v.key)
+                    .map(v => {
+                        return new Day(v.key, v.label);
+                    });
+            }
+        }
+    }
+
+    /**
+     * Обновляет основной список сессий
+     * и списки сессий по дням (для режима "все дни на одной странице")
+     *
+     * @param {AgendaSession[]} sessions
+     */
+    private updateListsOfSessions(sessions: AgendaSession[]) {
+        this.sessionList.update(sessions);
+
+        this.days.forEach(d => {
+            d.sessionList.update(sessions.filter(s => s.date === d.date))
+        });
     }
 }

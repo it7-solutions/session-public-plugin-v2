@@ -16,6 +16,8 @@ export class PluginConfig {
     minSessionsInMyAgenda: number = 0;
     isPaidSessions = false;
 
+    showAllDaysAtOnce = false;
+
     allowNextStep: () => void;
     disallowNextStep: () => void;
 

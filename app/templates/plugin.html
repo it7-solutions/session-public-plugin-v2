@@ -1,3 +1,5 @@
+<ng-container *ngIf="!config.showAllDaysAtOnce">
+
 <!-- Это будет блок для десктопно-планщетной верстки -->
 <div *ngIf="isMoreSmall()">
     <div> Блок для размера M (планшет+десктоп)</div>
@@ -72,6 +74,29 @@
     <a *ngIf="config.downloadAllCalendarsUrl" href="{{ config.downloadAllCalendarsUrl }}">Download all calendars</a>
     <a *ngIf="config.downloadMyProgrammeUrl" href="{{ config.downloadMyProgrammeUrl }}">Download my programme</a>
 </div>
+
+</ng-container>
+
+<ng-container *ngIf="config.showAllDaysAtOnce">
+    <ng-container *ngFor="let day of days">
+        <div *ngIf="day.visible">
+            {{ day.name }}
+            <ng-container *ngIf="day.first">
+                <it7-ui-select
+                        *ngIf="filters.filtersByKey.types"
+                        [choices]="filters.filtersByKey.types.values"
+                        [(model)]="filters.filtersByKey.types.value"
+                        (modelChange)="applyFilter('types', $event)"
+                ></it7-ui-select>
+            </ng-container>
+            <ng-container *ngFor="let item of day.sessionList.items">
+                <div *ngIf="item.visible">
+                    {{ item.original.name }}
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</ng-container>
 
 <div *ngIf="warningMessage">{{ warningMessage }}</div>
 
