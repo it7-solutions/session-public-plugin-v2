@@ -54,6 +54,8 @@ export class PluginComponent {
         this.sortings.add(config.sortings);
 
         this.buildDaysAndSessions();
+        console.log('days', this.days);
+        console.log('days json', JSON.stringify(this.days));
     }
 
     // -- Angular events
@@ -206,7 +208,7 @@ export class PluginComponent {
         // Выбирает фильтры
         let filters: Filter[];
         if(this.config.showAllDaysAtOnce){
-            filters = this.config.filters.filter(f => 'date' !== f.fieldName);
+            filters = this.config.filters.filter(f => 'day' !== f.fieldName);
         } else {
             filters = this.config.filters;
         }
@@ -225,7 +227,7 @@ export class PluginComponent {
      */
     private buildDaysAndSessions() {
         if(this.config.showAllDaysAtOnce) {
-            let daysFilter = this.config.filters.find(f => 'date' === f.fieldName);
+            let daysFilter = this.config.filters.find(f => 'day' === f.fieldName);
             if(daysFilter) {
                 this.days = daysFilter.values
                     .filter(v => v.key)
@@ -246,7 +248,7 @@ export class PluginComponent {
         this.sessionList.update(sessions);
 
         this.days.forEach(d => {
-            d.sessionList.update(sessions.filter(s => s.date === d.date))
+            d.sessionList.update(sessions.filter(s => s.day === d.day))
         });
     }
 }

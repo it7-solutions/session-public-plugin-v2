@@ -2,7 +2,7 @@ export class AgendaSession {
     id: string = '';
 
     // for output
-    date: string = '';
+    day: string = '';
     chef: string = '';
     restaurant: string = '';
     name: string = '';

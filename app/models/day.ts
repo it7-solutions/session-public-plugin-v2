@@ -1,7 +1,7 @@
 import {ListOf} from './list-of';
 
 export class Day {
-    date: string;
+    day: string;
     name: string;
     sessionList: ListOf = new ListOf();
 
@@ -10,7 +10,7 @@ export class Day {
 
 
     constructor(date: string, name: string) {
-        this.date = date;
+        this.day = date;
         this.name = name;
     }
 }

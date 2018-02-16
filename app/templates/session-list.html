@@ -4,7 +4,7 @@
 <div *ngFor="let item of sessionList.items">
     <div *ngIf="item.visible">
         <span (click)="onExpandClick(item)">
-            {{ item.original.name }} | {{ item.original.date }}
+            {{ item.original.name }} | {{ item.original.day }}
             <span *ngIf="item.original.isInAgenda ">Already in agenda</span>
             <span *ngIf="item.original.isInWaitingList ">Already in Waiting list</span>
         </span>

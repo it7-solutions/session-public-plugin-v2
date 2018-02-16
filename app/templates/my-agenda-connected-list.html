@@ -2,7 +2,7 @@
 <div *ngFor="let item of sessionList.items">
     <div *ngIf="item.visible && (item.original.isInAgenda || item.original.isInWaitingList)">
         <span (click)="onExpandClick(item)">
-            {{ item.original.name }} | {{ item.original.date }}
+            {{ item.original.name }} | {{ item.original.day }}
         </span>
         <span *ngIf="item.original.isInWaitingList ">Already in Waiting list</span>
         <span *ngIf="item.original.isCanRemove" (click)="onRemoveClick(item)">[-]</span>
