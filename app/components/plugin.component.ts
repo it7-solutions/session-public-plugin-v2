@@ -25,6 +25,8 @@ export class PluginComponent {
     public windowWidthMode = ''; // 's' | 'm'
     public warningMessage = '';
 
+    public showNavigationButtons: boolean = false;
+
     /**
      * Массив дней для вывода в режиме "Все дни на одной странице"
      *
@@ -54,6 +56,8 @@ export class PluginComponent {
         this.sortings.add(config.sortings);
 
         this.buildDaysAndSessions();
+
+        this.showNavigationButtons = this.filters.filtersByKey['dates'].value.length > 1;
         console.log('days', this.days);
         console.log('days json', JSON.stringify(this.days));
     }

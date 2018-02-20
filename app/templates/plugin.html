@@ -64,7 +64,7 @@
     <div (click)="onMyAgendaClick()">My Agenda ({{ dm.selectedSessionsNumber }})</div>
 
     <!-- Переключалка дня -->
-    <day-switch (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value" [myAgendaActive]="myAgendaActive"></day-switch>
+    <day-switch [showNavigationButtons]="showNavigationButtons" (onChange)="changeDayFilter($event)" [days]="filters.filtersByKey['dates'].values" [day]="filters.filtersByKey['dates'].value" [myAgendaActive]="myAgendaActive"></day-switch>
 
     <my-agenda-connected-list [sessionList]="sessionList"></my-agenda-connected-list>
 

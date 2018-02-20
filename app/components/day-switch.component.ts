@@ -15,6 +15,7 @@ export class DaySwitchComponent implements OnInit {
     @Input() public day: string;
     @Input() public showArrowText: false;
     @Input() public myAgendaActive: boolean = false;
+    @Input() public showNavigationButtons: boolean = false;
     @Output() public onChange = new EventEmitter<string>();
     public indexedDays: any = {};
 
