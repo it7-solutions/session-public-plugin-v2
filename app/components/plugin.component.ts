@@ -57,7 +57,6 @@ export class PluginComponent {
 
         this.buildDaysAndSessions();
 
-        this.showNavigationButtons = this.filters.filtersByKey['dates'].value.length > 1;
         console.log('days', this.days);
         console.log('days json', JSON.stringify(this.days));
     }
@@ -70,6 +69,10 @@ export class PluginComponent {
 
         this.dm.getSessionRequest();
         this.initWindowModeSwitch();
+
+        if(!this.config.showAllDaysAtOnce) {
+            this.showNavigationButtons = this.filters.filtersByKey['dates'].values.length > 1;
+        }
     }
 
     public onMyAgendaClick() {
