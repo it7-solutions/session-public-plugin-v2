@@ -155,6 +155,12 @@ export class PluginComponent {
             // Обновляет флаг visible у дня
             d.visible = !!d.sessionList.items.find(i => i.visible);
 
+            // Обновляет флаг haveMySelection у дня
+            d.haveMySelection = !!d.sessionList.items.find(i => {
+                let session: AgendaSession = i.original;
+                return session.isInAgenda || session.isInWaitingList
+            });
+
             // Обновляет флаг first у дня
             if(d.visible && lookingForFirst) {
                 d.first = true;

@@ -6,6 +6,7 @@ export class Day {
     sessionList: ListOf = new ListOf();
 
     visible: boolean;
+    haveMySelection: boolean;
     first: boolean;
 
 
